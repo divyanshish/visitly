@@ -1,0 +1,64 @@
+server:
+  port: 8080
+
+
+spring:
+  application:
+    name: myproject
+
+  datasource:
+    url: jdbc:mysql://mysql:3306/myprojectdb?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: RootPass123!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+
+jwt:
+  secret: ${JWT_SECRET:mySecretKeyForJWTTokenGenerationPleaseChangeInProduction1234567890}
+  expiration: 86400000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: INFO
+    com.visitly.myproject: DEBUG
+    org.springframework.security: WARN
+    org.hibernate.SQL: DEBUG
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operationsSorter: method
+  show-actuator: true
